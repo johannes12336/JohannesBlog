@@ -1,0 +1,16 @@
+
+
+POST  http://localhost:3000/test/login
+Content-Type: application/x-www-form-urlencoded
+
+<form action="/test/login" method="post">
+            <input name="username" type="text" value="test" placeholder="username" required></input><br>
+            <input name="password" type="password" value="test placeholder="password"><br>
+
+            <button>login</button>
+        </form>
+
+
+###
+POST 
+Content-Type: application/x-www-form-urlencoded

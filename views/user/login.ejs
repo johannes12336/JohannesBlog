@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<%- include('../includes/head', {title: 'Log In | Johannes Blog'}) %>
+<body>
+    <%- include('../includes/header') %>
+
+    <main>
+        <h2>Log In</h2>
+
+        <form action="/login" method="post">
+            <input name="username" type="text" placeholder="username" required></input><br>
+            <input name="password" type="password" placeholder="password"><br>
+
+            <button>login</button>
+        </form>
+
+        <a href="/signup">or sign up</a>
+
+    </main>
+
+    <%- include('../includes/footer') %>
+    
+</body>
+</html>

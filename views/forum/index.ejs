@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum | Johannes Blog</title>
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <%- include('../includes/header') %>
+
+    <main>
+        <h3>MY PERSONAL TWITTER hehe</h3>
+        <p><%= user.username %></p>
+        <form action="/posts" method="post">
+        <textarea name="text" placeholder="What's happening?" id="post-input"></textarea>
+        <input type="hidden" name="username" value="<%= user.username %>">
+        <button id="post-btn">Post</button>
+        </form>
+
+
+        <div>
+            <%  posts.forEach(post => { %>
+                <li>
+                    <p><%= post.postText %> </p>
+                    <p>written by <%=post.username %></p>
+                </li>
+
+                <div class="post"> 
+                    <div class="post-inner">
+                        <div>
+                            <p class="handle"><%=post.username %></p>
+                            <p class="post-text"><%= post.postText %></p>
+                            <div class="post-details">
+                                <span class="post-detail">
+                                    <i class="fa-regular fa-comment-dots"
+                                    data-reply="post._id"
+                                    ></i>
+                                    100
+                                </span>
+                                <span class="post-detail">
+                                    <i class="fa-solid fa-heart ${likeIconClass}"
+                                    data-like="post._id"
+                                    ></i>
+                                    99
+                                </span>
+                                <span class="post-detail">
+                                    <i class="fa-solid fa-repost ${repostIconClass}"
+                                    data-repost="post._id"
+                                    ></i>
+                                    98
+                                </span>
+                                <span class="post-detail ${deleteIconClass}">
+                                    <i class="fa-solid fa-trash"
+                                    data-deletes="post._id"
+                                    ></i>
+                                </span>
+                            </div>   
+                        </div>            
+                    </div>
+                    <div class="hidden" id="replies-post._id">
+                        
+                        <div class="comment-section">
+                            <img src="images/scrimbalogo.png" class="profile-pic">
+                            <textarea class="comment-textarea" placeholder="write a comment" id="comment-under-post._id"></textarea>
+                            <button class="comment-btn" id="comment-btn" data-comment="post._id">send</button>
+                        </div>
+                
+                    </div>   
+                </div>
+            <% }) %>
+        </div>
+        
+        <div>
+            <% if(posts.length < 1) { %>
+                <p>be the first to write a post</p>
+            <% } %>
+        </div>
+		
+    </main>
+
+    <%- include('../includes/footer') %>
+    <script src="java/forum.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<%- include('../includes/head', {title: `Update ${article.title} | Johannes Blog`}) %>
+<body>
+    <%- include('../includes/header') %>
+
+    <main>
+        <h2>Updating "<%=article.title%>"</h2>
+
+        <form action="/articles/<%=article.slug%>" method="post">
+            <input name="title" value="<%=article.title%>" type="text" placeholder="enter title here" required><br>
+            <input name="content" value="<%=article.content%>" type="text" placeholder="enter text" required></input><br>
+            <input name="date" type="date" placeholder="08.10.1999" required><br>
+
+            <button>publish</button>
+        </form>
+    </main>
+
+    <%- include('../includes/footer') %>
+    
+</body>
+</html>

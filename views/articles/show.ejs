@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head', {title: `${article.title} | Johannes Blog`}) %>
+<body>
+    <%- include('../includes/header')%>
+    
+    <main>
+        <div>
+            <h1><%= article.title%></h1>
+        </div>
+        <div>
+            <p>
+                <%= article.content %>
+            </p>
+        </div>
+        <div>
+            <%= article.date %>
+        </div>
+    </main>
+
+    <%- include('../includes/footer') %>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<%- include('../includes/head', { title: 'All articles | Johannes Blog' }) %>
+<body>
+    <%- include('../includes/header') %>
+
+    <main>
+        <h3>All my Articles</h3>
+        <ul>
+            <%  articles.forEach(article => { %>
+                <li>
+                    <a  href="/articles/<%= article.slug %>"> <%= article.title %></a>
+                </li>
+
+            <% }) %>
+        </ul>
+
+        
+        <% if(articles.length < 1) { %>
+            <p>no articles currently on display</p>
+        <% } %>
+        
+    </main>
+
+    <%- include('../includes/footer') %>
+    
+</body>
+</html>

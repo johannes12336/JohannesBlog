@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<%- include('../includes/head', {title: 'Create New  Articles | Johannes Blog'}) %>
+<body>
+    <%- include('../includes/header') %>
+
+    <main>
+        <div>
+
+        </div>
+        <div>
+          <%  articles.forEach(article => { %>
+            <li>
+                <h3><%= article.title%></h3>
+                <div>
+                    <a href="/admin/articles/<%=article.slug%>/edit">edit</a>
+                    <a href="/admin/articles/<%=article.slug%>/delete">delete</a>
+                </div>
+           <% }) %>
+        </div>
+        <div>
+            <a href="admin/articles/new">Create a new awsome article</a>
+        </div>
+    </main>
+
+    <%- include('../includes/footer') %>
+    
+</body>
+</html>
