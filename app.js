@@ -208,6 +208,18 @@ app.post('/articles/:slug', async (request, response) => {
     }
 })
 
+app.get('/adminhoe', (request, response) => {
+    response.render('admin/secure')
+})
+
+app.post('/admin', (request, response) => {
+    console.log(request.body.password)
+    console.log(process.env.WHY)
+    console.log(process.env.SECRET)
+    if (request.body.password === process.env.SUPER_SECRET_KEY){
+        response.redirect(`/admin/${request.body.password}`)
+    } else return response.send('you are not authorized')
+})
 
 
 //users
@@ -252,7 +264,7 @@ app.post('/signup', async (request, response) => {
         })
         await user.save()
 
-        response.redirect('user/login')
+        response.redirect('/login')
     } catch (error) {
         console.error(error)
         response.send('ERROR: user could not be created')
