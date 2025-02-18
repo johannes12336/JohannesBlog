@@ -5,16 +5,21 @@
     <%- include('../includes/header') %>
 
     <main>
-        <h2>Create a new article</h2>
-        <p>or two</p>
+        <div class="container">
+            <h1>Create a new article</h1> 
 
-        <form action="/articles" method="post">
-            <input name="title" type="text" placeholder="enter title here" required><br>
-            <input name="content" type="text" placeholder="enter text" required></input><br>
-            <input name="date" type="date" placeholder="08.10.1999" required><br>
+            <form action="/articles" method="post">
+                <label for="article-title-input">Title</label><br>
+                <input name="title" class="input-item" id="article-title-input" type="text" placeholder="enter title here" required><br>
 
-            <button>publish</button>
-        </form>
+                <label for="article-content-textarea">Content</label>
+                <textarea name="content" id="article-content-textarea" placeholder="enter content of article" required></textarea>
+                <input name="date" type="date" placeholder="08.10.1999" required><br>
+
+                <button class="btn">publish</button>
+            </form>
+        </div>
+        
     </main>
 
     <%- include('../includes/footer') %>

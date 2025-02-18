@@ -5,16 +5,21 @@
     <%- include('../includes/header') %>
 
     <main>
-        <h2>Log In</h2>
+        <div class="container">
+            <h2>Log In</h2>
+            <form action="/login" method="post">
+                <label for="username-input">Username</label><br>
+                <input name="username" class="input-item" id="username-input" type="text" placeholder="enter username" required></input><br>
+                <label for="userpassword-input">Password</label><br>
+                <input name="password" class="input-item" id="userpassword-input" type="password" placeholder="enter password" required><br>
+                <button class="btn">login</button>
+            </form>
+    
+            <a class="btn sec-btn" href="/signup">or sign up</a>
+        </div>
+        
 
-        <form action="/login" method="post">
-            <input name="username" type="text" placeholder="username" required></input><br>
-            <input name="password" type="password" placeholder="password" required><br>
-
-            <button>login</button>
-        </form>
-
-        <a href="/signup">or sign up</a>
+        
 
     </main>
 

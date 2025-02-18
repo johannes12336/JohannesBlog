@@ -5,15 +5,72 @@
     <%- include('../includes/header') %>
 
     <main>
-        <h3>All my Articles</h3>
-        <ul>
-            <%  articles.forEach(article => { %>
-                <li>
-                    <a  href="/articles/<%= article.slug %>"> <%= article.title %></a>
-                </li>
+        <div class="container">
+            <h2>All my Articles</h2>
+            <div class="articles-container">
 
-            <% }) %>
-        </ul>
+                <%  articles.forEach(article => { %>
+            
+                    <a href="/articles/<%= article.slug %>" class="article-card-link">
+                        <div class="article-card">
+                            <div>
+                                <img src="/images/demo-img.jpg" alt="">
+                            </div>
+                            <div>
+                                <h6 class="article-card-date"><%= article.date %></h6>
+                                <p class="article-card-title"><%= article.title %></p>
+                                
+                            </div>
+                        </div>
+
+                    </a>
+                       
+    
+                <% }) %>
+
+                <div class="article-card">
+                    <div>
+                        <img src="/images/demo-img.jpg" alt="">
+                    </div>
+                    <div>
+                        <p>article date</p>
+                        <h6>article title</h6>
+                    </div>
+                </div>
+        
+                <div class="article-card">
+                    <div>
+                        <img src="/images/demo-img.jpg" alt="">
+                    </div>
+                    <div>
+                        <p class="article-card-date">article date</p>
+                        <h6 class="">article title</h6>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div>
+                        <img src="/images/demo-img.jpg" alt="">
+                    </div>
+                    <div>
+                        <p>article date</p>
+                        <h6>article title</h6>
+                    </div>
+                </div>
+        
+                <div class="article-card">
+                    <div>
+                        <img src="/images/demo-img.jpg" alt="">
+                    </div>
+                    <div>
+                        <p>article date</p>
+                        <h6>article title</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+  
 
         
         <% if(articles.length < 1) { %>

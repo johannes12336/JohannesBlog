@@ -13,70 +13,80 @@
 <body>
     <%- include('../includes/header') %>
 
-    <main>
-        <h3>MY PERSONAL TWITTER hehe</h3>
-        <p><%= user.username %></p>
-        <form action="/posts" method="post">
-        <textarea name="text" placeholder="What's happening?" id="post-input"></textarea>
-        <input type="hidden" name="username" value="<%= user.username %>">
-        <button id="post-btn">Post</button>
-        </form>
-
-
-        <div>
-            <%  posts.forEach(post => { %>
-                
-
-                <div class="post"> 
-                    <div class="post-inner">
-                        <div>
-                            <p class="handle"><%=post.username %></p>
-                            <p class="post-text"><%= post.postText %></p>
-                            <div class="post-details">
-                                <span class="post-detail">
-                                    <i class="fa-regular fa-comment-dots"
-                                    data-reply="post._id"
-                                    ></i>
-                                    100
-                                </span>
-                                <span class="post-detail">
-                                    <i class="fa-solid fa-heart ${likeIconClass}"
-                                    data-like="post._id"
-                                    ></i>
-                                    99
-                                </span>
-                                <span class="post-detail">
-                                    <i class="fa-solid fa-repost ${repostIconClass}"
-                                    data-repost="post._id"
-                                    ></i>
-                                    98
-                                </span>
-                                <span class="post-detail ${deleteIconClass}">
-                                    <i class="fa-solid fa-trash"
-                                    data-deletes="post._id"
-                                    ></i>
-                                </span>
-                            </div>   
-                        </div>            
-                    </div>
-                    <div class="hidden" id="replies-post._id">
-                        
-                        <div class="comment-section">
-                            <img src="images/scrimbalogo.png" class="profile-pic">
-                            <textarea class="comment-textarea" placeholder="write a comment" id="comment-under-post._id"></textarea>
-                            <button class="comment-btn" id="comment-btn" data-comment="post._id">send</button>
+    <main class="forum-back">
+        <div class="forum-container">
+            <h3 class="forum-title">MY PERSONAL TWITTER hehe</h3>
+            <div class="post-input-area">
+                <form action="/posts" method="post" class="forum-form">
+                    <textarea name="text" placeholder="What's happening, <%= user.username %>?" id="post-input"></textarea>
+                    <input type="hidden" name="username" value="<%= user.username %>">
+                    <button class="btn" id="post-btn">Post</button>
+                </form>
+            </div>
+    
+    
+            <div>
+                <%  posts.forEach(post => { %>
+                    
+    
+                    <div class="post"> 
+                        <div class="post-inner">
+                            <img src="/images/grinsebacke.jpeg" class="profile-pic">
+                            <div>
+                                <p class="handle"><%=post.username %></p>
+                                <p class="post-text"><%= post.postText %></p>
+                                <div class="post-details">
+                                    <span class="post-detail">
+                                        <i class="fa-regular fa-comment-dots"
+                                        data-reply="<%= post %>"
+                                        ></i>
+                                        100
+                                    </span>
+                                    <span class="post-detail">
+                                        <i class="fa-solid fa-heart"
+                                        data-like="<%= post._id %>"
+                                        ></i>
+                                        <span data-like-count="<%= post._id %>">
+                                            99
+                                        </span>
+                                    </span>
+                                    <span class="post-detail">
+                                        <i class="fa-solid fa-retweet"
+                                        data-repost="<%= post._id %>"
+                                        ></i>
+                                        98
+                                    </span>
+                                    <span class="post-detail">
+                                        <i class="fa-solid fa-upload" data-upload="<%= post._id %>"></i>
+                                    </span>
+                                    <span class="post-detail">
+                                        <i class="fa-solid fa-trash"
+                                        data-deletes="<%= post._id %>"
+                                        ></i>
+                                    </span>
+                                </div>   
+                            </div>            
                         </div>
-                
-                    </div>   
-                </div>
-            <% }) %>
+                        <div class="hidden" id="replies-<%= post._id %>">
+                            
+                            <div class="comment-section">
+                                <img src="/images/grinsebacke.jpeg" class="profile-pic">
+                                <textarea class="comment-textarea" placeholder="write a comment" id="comment-under-<%= post._id %>"></textarea>
+                                <button class="comment-btn" id="comment-btn" data-comment="<%= post._id %>">send</button>
+                            </div>
+                    
+                        </div>   
+                    </div>
+                <% }) %>
+            </div>
+            
+            <div>
+                <% if(posts.length < 1) { %>
+                    <p>be the first to write a post</p>
+                <% } %>
+            </div>
         </div>
-        
-        <div>
-            <% if(posts.length < 1) { %>
-                <p>be the first to write a post</p>
-            <% } %>
-        </div>
+
 		
     </main>
 

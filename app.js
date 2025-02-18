@@ -24,7 +24,7 @@ const articleSchema = new mongoose.Schema({
     title: { type: String, required: true},
     slug: { type: String, required: true},
     content: { type: String, required: true},
-    date: { type: Date, required: true},
+    date: { type: String, required: true},
 })
 
 const Article = mongoose.model('Article', articleSchema)
@@ -97,11 +97,17 @@ app.get('/articles', async(request, response) => {
 
 app.post('/articles', async (request,response) =>{
     try {
+        const date = new Date(request.body.date)
+        console.log(date)
+        console.log(date.getDate())
+        console.log(typeof( date.toLocaleDateString()))
+        const readableDate = date.toLocaleDateString()
+
         const article = new Article({
             title: request.body.title,
             slug: slug(request.body.title),
             content: request.body.content, 
-            date: request.body.date
+            date: readableDate
         })
         await article.save()
 
