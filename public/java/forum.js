@@ -41,7 +41,6 @@ async function handleDeleteClick (postId){
     const root = document.documentElement
     
 
-    console.log(response)
-    root.innerHTML = response
+    
 }
 
