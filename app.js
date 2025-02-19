@@ -45,7 +45,11 @@ const User = mongoose.model('User', userSchema)
 const postSchema = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     username: {type: String, required: true},
-    postText: {type: String},
+    postText: {type: String, required: true},
+    likes: {type: Number},
+    retweets: {type: Number},
+    isLiked: {type: Boolean, default: false},
+    isRetweeted: {type: Boolean, default: false}
 })
 
 const Post = mongoose.model('Post', postSchema)
@@ -312,7 +316,7 @@ app.post('/login', async (request, response) => {
 
 app.get('/logout',(request,response) => {
     response.clearCookie("accessToken")
-    response.send('User logged out')
+    response.redirect("/")
 })
 
 function authenticateToken(request, response, next) {
@@ -354,13 +358,40 @@ app.post('/posts', authenticateToken, async (request, response) => {
     const post = new Post({
         user: request.user._id, 
         username: request.body.username,
-        postText: request.body.text
+        postText: request.body.text, 
+        likes: Math.floor(Math.random() * 1001),
+        retweets: Math.floor(Math.random() * 301)
     })
     await post.save()
 
     const posts = await Post.find({}).exec()
-    response.render('forum/index', {
-        user: request.user,
-        posts: posts
-    })
+    response.redirect('/forum')
+})
+
+
+app.get('/forum/delete/:id', authenticateToken, async (request, response) =>{
+    try {
+        const postArray = await Post.find({_id: request.params.id})
+        const post =postArray[0]
+        
+        console.log(post.username)
+
+        if(!request.user.username=== post.username){
+            throw new Error('Someone not allowed making a request')
+            response.send('YOU ARE NOT ALLOWED!!!!!!!')
+        }
+
+        await Post.findOneAndDelete({_id: request.params.id})
+        const posts = await Post.find({}).exec()
+        
+        response.render('forum/index', {
+            user: request.user,
+            posts: posts
+        })
+
+
+    } catch (error) {
+        console.error(error)
+        response.send('oopsie')
+    }
 })

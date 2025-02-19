@@ -18,7 +18,7 @@
             <h3 class="forum-title">MY PERSONAL TWITTER hehe</h3>
             <div class="post-input-area">
                 <form action="/posts" method="post" class="forum-form">
-                    <textarea name="text" placeholder="What's happening, <%= user.username %>?" id="post-input"></textarea>
+                    <textarea name="text" placeholder="What's happening, <%= user.username %>?" id="post-input" required="true"></textarea>
                     <input type="hidden" name="username" value="<%= user.username %>">
                     <button class="btn" id="post-btn">Post</button>
                 </form>
@@ -38,32 +38,36 @@
                                 <div class="post-details">
                                     <span class="post-detail">
                                         <i class="fa-regular fa-comment-dots"
-                                        data-reply="<%= post %>"
+                                        data-reply="<%= post._id %>"
+                                        data-username="<%= post.username %>"
                                         ></i>
                                         100
                                     </span>
                                     <span class="post-detail">
-                                        <i class="fa-solid fa-heart"
+                                        <i id="like-<%= post._id %>" class="fa-solid fa-heart"
                                         data-like="<%= post._id %>"
                                         ></i>
-                                        <span data-like-count="<%= post._id %>">
-                                            99
+                                        <span like-count="<%= post._id %>">
+                                            <%= post.likes %>
                                         </span>
                                     </span>
                                     <span class="post-detail">
-                                        <i class="fa-solid fa-retweet"
+                                        <i id="repost-<%= post._id %>" class="fa-solid fa-retweet"
                                         data-repost="<%= post._id %>"
                                         ></i>
-                                        98
+                                        <%= post.retweets %>
                                     </span>
                                     <span class="post-detail">
                                         <i class="fa-solid fa-upload" data-upload="<%= post._id %>"></i>
                                     </span>
-                                    <span class="post-detail">
+
+                                    <%if (post.username === user.username ) { %>
+                                        <span >
                                         <i class="fa-solid fa-trash"
                                         data-deletes="<%= post._id %>"
                                         ></i>
-                                    </span>
+                                        </span>
+                                    <% } %>
                                 </div>   
                             </div>            
                         </div>

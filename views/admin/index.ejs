@@ -5,21 +5,23 @@
     <%- include('../includes/header') %>
 
     <main>
-        <div>
-
-        </div>
-        <div>
-          <%  articles.forEach(article => { %>
-            <li>
-                <h3><%= article.title%></h3>
-                <div>
-                    <a href="/admin/articles/<%=article.slug%>/edit">edit</a>
-                    <a href="/admin/articles/<%=article.slug%>/delete">delete</a>
+        <div class="container">
+            <div id="admin-link-new">
+                <a class="btn green" href="admin/articles/new">Create a new awsome article</a>
+            </div>
+            
+            <div>
+                <h2>Edit or delete articles</h2>
+              <%  articles.forEach(article => { %>
+                <div id="admin-articles">
+                    <h3><%= article.title%></h3>
+                    <div>
+                        <a class="small-btn green" href="/admin/articles/<%=article.slug%>/edit">edit</a>
+                        <a class="small-btn red" href="/admin/articles/<%=article.slug%>/delete">delete</a>
+                    </div>
                 </div>
-           <% }) %>
-        </div>
-        <div>
-            <a href="admin/articles/new">Create a new awsome article</a>
+               <% }) %>
+            </div>
         </div>
     </main>
 
