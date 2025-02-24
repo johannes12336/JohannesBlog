@@ -8,11 +8,13 @@
         <h2>Updating "<%=article.title%>"</h2>
 
         <form action="/articles/<%=article.slug%>" method="post">
-            <input name="title" value="<%=article.title%>" type="text" placeholder="enter title here" required><br>
-            <input name="content" value="<%=article.content%>" type="text" placeholder="enter text" required></input><br>
-            <input name="date" type="date" placeholder="08.10.1999" required><br>
+            <label for="article-title-input">Title</label><br>
+            <input name="title" class="input-item" id="article-title-input"  value="<%=article.title%>" type="text" placeholder="enter title here" required><br>
+            <label for="article-content-textarea">Content</label>
+            <textarea name="content" id="article-content-textarea" placeholder="enter content of article" required><%=article.content%></textarea>
+            <input name="date" type="date" required><br>
 
-            <button>publish</button>
+            <button class="btn">publish</button>
         </form>
     </main>
 

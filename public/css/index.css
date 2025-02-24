@@ -142,7 +142,10 @@ header {
     min-width: 150px;
     min-height: 2em;
     border: #2b283a 2px solid;
+    margin-bottom: 20px;
 }
+
+
 
 #password-input{
     margin-bottom: 1em;
@@ -176,6 +179,7 @@ form {
     border: #2b283a 2px solid;
     border-radius: 16px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 img {
@@ -227,6 +231,23 @@ img {
 main {
     
 }
+
+html, body {
+    height: 100%;
+}
+
+footer {
+    width: 100%;
+    background-color: #333;
+    color: whitesmoke;
+    padding: 1em;
+    margin-top: 1em;
+}
+
+body > footer {
+    position: sticky;
+    top: 100vh;
+  }
 
 .hidden {
     display: none;
@@ -332,3 +353,92 @@ main {
 }
 
 
+.header-huge {
+    font-size: 11rem;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    
+}
+
+.header-big {
+    font-size: 6.854rem;
+    margin: 0px;
+}
+
+.huge-big-header {
+    display: flex;
+    align-items:baseline;
+    
+    margin-bottom: 0px;
+}
+
+/* ABOUT  */
+
+
+
+.about-container{
+    
+}
+
+.about-picture-container {
+    border: 2px solid black;
+    padding: 1em;
+}
+
+.about-picture-container img{
+}
+
+.about-content-container{
+    border: 2px solid black;
+    padding: 1em;
+}
+
+.poem-verse{
+    line-height: .5em;
+    margin-bottom: 2em;
+}
+
+.poem-verse-right{
+    line-height: .5em;
+    margin-bottom: 2em;
+    text-align: right;
+}
+
+@media (max-width: 760px){
+    .header-huge {
+        font-size: 6.854rem;
+    }
+    
+    .header-big {
+        font-size: 2.618rem;
+    }
+    
+    .huge-big-header {
+        display: flex;
+        align-items:baseline;
+        margin-bottom: 0px;
+    }
+}
+
+@media (max-width: 20px){}
+
+@media (min-width: 759px) {
+    
+.about-container{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.about-picture-container {
+    border: 2px solid black;
+    padding: 1em;
+    width: 45%;
+}
+
+
+.about-content-container{
+    border: 2px solid black;
+    width: 45%;
+}
+}

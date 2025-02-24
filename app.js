@@ -33,6 +33,7 @@ const Article = mongoose.model('Article', articleSchema)
 const userSchema = new mongoose.Schema({
     username: {type: String, required: true, unique: true},
     password: {type: String},
+    isAdmin: {type: Boolean, default: false},
     posts: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -139,41 +140,9 @@ app.get('/articles/:slug', async (request, response) => {
 
 
 
-
-// app.post('/posts', async (request, response) => {
-//     try {
-
-//           // helper function getTokenFrom isolates the token from the authorization header
-//     const getTokenFrom = request => {
-//         const authorization = request.get('authorization')
-//         if (authorization && authorization.startsWith('Bearer ')) {
-//         return authorization.replace('Bearer ', '')
-//         }
-//         return null
-//     } 
-
-//         const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
-//         if (!decodedToken.id) {
-//           return response.status(401).json({ error: 'token invalid' })
-//          }
-
-//         const user = await User.findById(decodedToken.id)
-
-//         const post = new Post({
-//         user: user._id,
-//         postText: request.body.text,
-//         })
-//         await post.save()
-//         response.send('post created')
-//     } catch (error) {
-//         console.error(error)
-//         response.status(404).send('Error: Post could not be posted')
-//     }
-// })
-
 //admin pages
 
-app.get('/admin', async (request, response) => {
+app.get('/admin', authenticateToken, isAdmin, async (request, response) => {
     try { const articles = await Article.find({}).exec()
         response.render('admin/index', {
             articles: articles
@@ -184,12 +153,12 @@ app.get('/admin', async (request, response) => {
     }
 })
 
-app.get('/admin/articles/new', (request, response) => {
+app.get('/admin/articles/new', authenticateToken, isAdmin, (request, response) => {
     response.render('admin/newArticle')
 })
 
 
-app.get('/admin/articles/:slug/edit', async (request, response) => {
+app.get('/admin/articles/:slug/edit', authenticateToken, isAdmin, async (request, response) => {
     try {
         const article = await Article.findOne({slug: request.params.slug}).exec()
         if(!article) throw new Error('Article not found :((')
@@ -210,26 +179,23 @@ app.post('/articles/:slug', async (request, response) => {
             request.body,
             {new: true}
         )
-        response.render('articles/show', {
-            article: article
-        })
+        response.redirect('/admin')
     } catch (error) {
         
     }
 })
 
-app.get('/adminhoe', (request, response) => {
-    response.render('admin/secure')
+app.get('/admin/articles/:slug/delete', authenticateToken ,isAdmin, async (request, response) => {
+    try {
+        await Article.findOneAndDelete({slug: request.params.slug})
+        response.redirect('/admin')
+    } catch (error) {
+        console.error(error)
+        response.status(404).send('yooo there was a problem ergo error my friend')
+    }
 })
 
-app.post('/admin', (request, response) => {
-    console.log(request.body.password)
-    console.log(process.env.WHY)
-    console.log(process.env.SECRET)
-    if (request.body.password === process.env.SUPER_SECRET_KEY){
-        response.redirect(`/admin/${request.body.password}`)
-    } else return response.send('you are not authorized')
-})
+
 
 
 //users
@@ -299,10 +265,7 @@ app.post('/login', async (request, response) => {
        } else {
         const accessToken = jwt.sign({user}, process.env.SECRET)
        response.set({"Set-Cookie": "accessToken=" + accessToken + "; path=/"})
-       response.render('user/testme', {
-        user: user.username,
-        userToken: accessToken
-       })
+       response.redirect('/forum')
        }
     } catch (error) {
         console.error(error)
@@ -326,16 +289,35 @@ function authenticateToken(request, response, next) {
     const accessToken = accessTokenHeader.split("=")[1]
     
 
-    const token = accessToken // authHeader && authHeader.split(' ')[1]
+    // const token = accessToken // authHeader && authHeader.split(' ')[1]
     
 
-    jwt.verify(token, process.env.SECRET, (err, usershell) => {
+    jwt.verify(accessToken, process.env.SECRET, (err, usershell) => {
         if (err) return response.sendStatus(403)
 
         request.user = usershell.user
         next()
     })
 }
+
+
+function isAdmin (request, response, next) {
+    if(!request.user.isAdmin)
+        response.render('error/restricted')
+
+    next()
+}
+
+
+app.get('/admincheck', authenticateToken, isAdmin, (request, response) => {
+    try {
+        response.send(`Are you an admin ${request.user.username}? the answer is ${request.user.isAdmin}`)
+    } catch (error) {
+        console.error(error)
+        response.send('ERROR')
+    }
+    response.send(`Are you an admin ${request.user.username}? the answer is ${request.user.isAdmin}`)
+})
 
 app.get('/test/forum', authenticateToken, (request, response,) => {
     console.log(request.user.username)
@@ -394,4 +376,31 @@ app.get('/forum/delete/:id', authenticateToken, async (request, response) =>{
         console.error(error)
         response.send('oopsie')
     }
+})
+
+app.get('/forum/like/:id', authenticateToken, async (request, response) => {
+    try {
+        const post = await Post.findOne({_id: request.params.id})
+        const newLikes = post.likes +1
+    
+        console.log(newLikes)
+    
+    
+        const updatedPost = await Post.findOneAndUpdate(
+            {_id: request.params.id},
+            {likes: newLikes,
+            isLiked: true,
+            }, 
+            {new: true}
+        )
+    
+        response.send(updatedPost)
+    
+        console.log(updatedPost)
+    } catch (error) {
+        console.error(error)
+        response.status(404).send('probably an old post')
+    }
+
+
 })

@@ -18,12 +18,21 @@ document.addEventListener('click', function(e){
 })
 
 
-function handleLikeClick (postId){
-    console.log(postId)
+async function handleLikeClick (postId){
 
-    const toBeLiked = document.getElementById(`like-${postId}`)
+    try {
+        console.log("clicked like")
 
-    toBeLiked.classList.toggle("liked")
+        const toBeLiked = document.getElementById(`like-${postId}`)
+        toBeLiked.classList.toggle("liked")
+
+        const response = await fetch(`/forum/like/${postId}`)
+        
+    } catch (error) {
+        console.error(error)
+    }
+    
+
 }
 
 function handleRepostClick (postId){
@@ -39,7 +48,7 @@ async function handleDeleteClick (postId){
     console.log(postId)
     const response = await fetch(`/forum/delete/${postId}`)
     const root = document.documentElement
-    
+    root.innerHTML = await response.text()
 
     
 }
