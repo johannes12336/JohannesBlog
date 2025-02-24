@@ -84,4 +84,12 @@ npm start
 
 
 ## Credits ##
+I want to use this opportunity to thank the acedemy, my mom, codecookies, and scrimba.
+all credits currently to Johannes
 
+
+## Contributing ##
+Contributions are welcome! If you want to improve the project, feel free to fork the repository and submit a pull request.
+
+## License ##
+This project is licensed under the MIT License.
