@@ -339,6 +339,7 @@ app.get('/test/forum', authenticateToken, (request, response,) => {
 
 app.get('/forum', authenticateToken, async (request, response) => {
     let posts = await Post.find({}).exec()
+    posts = posts.reverse()
     const replies = await Reply.find({}).exec()
 
     // posts = posts.map(post => {
