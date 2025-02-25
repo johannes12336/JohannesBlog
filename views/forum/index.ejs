@@ -27,8 +27,7 @@
     
             <div>
                 <%  posts.forEach(post => { %>
-                    
-    
+                    <% const commentReplies = replies.filter(reply => reply.post.toString() == post._id.toString()) %>
                     <div class="post"> 
                         <div class="post-inner">
                             <img src="/images/grinsebacke.jpeg" class="profile-pic">
@@ -41,7 +40,7 @@
                                         data-reply="<%= post._id %>"
                                         data-username="<%= post.username %>"
                                         ></i>
-                                        100
+                                        <%= commentReplies.length %>
                                     </span>
                                     <span class="post-detail">
                                         <i id="like-<%= post._id %>" class="fa-solid fa-heart"
@@ -68,18 +67,38 @@
                                         ></i>
                                         </span>
                                     <% } %>
-                                </div>   
-                            </div>            
-                        </div>
-                        <div class="hidden" id="replies-<%= post._id %>">
+                                </div>  
+
+
+                                <div class="hidden" id="replies-<%= post._id %>">
+                                    <% commentReplies.forEach(commentReply => { %>
+                                        <div class="post-inner reply-section">
+                                            <img src="/images/grinsebacke.jpeg" class="profile-pic">
+                                            <div>
+                                                <p class="handle"><%= commentReply.username %></p>
+                                                <p class="post-text"><%=commentReply.replyText%></p>
+                                            </div>
+                                            
+                                        </div>
+                                    
+                                    
+                                    <% }) %>
+                                    <div class="comment-section">
+                                        <form class="comment-form" method="post" action="/forum/comment-under/<%= post._id %>">
+                                            <textarea name="text" class="comment-textarea" placeholder="write a comment" id="comment-under-<%= post._id %>" required></textarea>
+                                            <input type="hidden" name="username" value="<%= user.username %>">
+                                            <button class="comment-btn" id="comment-btn">send</button>
+                                        </form>
+                                    </div>
                             
-                            <div class="comment-section">
-                                <img src="/images/grinsebacke.jpeg" class="profile-pic">
-                                <textarea class="comment-textarea" placeholder="write a comment" id="comment-under-<%= post._id %>"></textarea>
-                                <button class="comment-btn" id="comment-btn" data-comment="<%= post._id %>">send</button>
-                            </div>
-                    
-                        </div>   
+                                </div>  
+                            </div>             
+                        </div>
+                      
+
+                       
+
+                           
                     </div>
                 <% }) %>
             </div>

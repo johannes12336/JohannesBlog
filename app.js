@@ -50,8 +50,17 @@ const postSchema = new mongoose.Schema({
     likes: {type: Number},
     retweets: {type: Number},
     isLiked: {type: Boolean, default: false},
-    isRetweeted: {type: Boolean, default: false}
+    isRetweeted: {type: Boolean, default: false},
 })
+
+const replySchema = new mongoose.Schema({
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    username: {type: String, required: true},
+    replyText: {type: String, required: true},
+    post: {type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true}
+})
+
+const Reply = mongoose.model('Reply', replySchema)
 
 const Post = mongoose.model('Post', postSchema)
 
@@ -329,10 +338,18 @@ app.get('/test/forum', authenticateToken, (request, response,) => {
 // Forum
 
 app.get('/forum', authenticateToken, async (request, response) => {
-    const posts = await Post.find({}).exec()
+    let posts = await Post.find({}).exec()
+    const replies = await Reply.find({}).exec()
+
+    // posts = posts.map(post => {
+    //     const postReplies = replies.filter(reply => reply.post.toString() === post._id.toString())
+    //     console.log(postReplies)
+    //     return {...post, replies: postReplies}
+    // })
     response.render('forum/index', {
         user: request.user,
-        posts: posts
+        posts: posts,
+        replies: replies
     })
 })
 
@@ -403,4 +420,22 @@ app.get('/forum/like/:id', authenticateToken, async (request, response) => {
     }
 
 
+})
+
+
+app.post('/forum/comment-under/:postId', authenticateToken, async(request, response) => {
+    try {
+        const reply = new Reply({
+            user: request.user._id,
+            username: request.body.username,
+            replyText: request.body.text,
+            post: request.params.postId
+        })
+        await reply.save()
+
+        response.redirect('/forum')
+    } catch (error) {
+        console.error(error)
+        response.send('ERRRRRRRor')
+    }
 })

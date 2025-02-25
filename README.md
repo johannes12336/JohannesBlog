@@ -35,41 +35,34 @@ if you want to use the project locally make sure to follow these steps
 ###  1.Clone the repository
 
 
+```
+$ git clone https://github.com/johannes12336/JohannesBlog.git <folder_name>
 
+```
 
 ### 2. Install the dependencies
 
-make sure to install the ALL of the following npm packages before continuing
+make sure to install the the following npm packages before continuing by using: 
 
- 
+ ```
+ npm install
+ ```
+
+
  **bcrypt** (^5.1.1) - For password hashing.
- ```
-  npm install bcrypt
- ```
+ 
    **dotenv** (^16.4.7) - For environment variable management.
- ```
-  npm install dotenv --save
-  ```
+ 
   **ejs** (^3.1.10) - For templating views.
-  ```
-  $ npm install ejs
-  ```
+ 
   **express** (^4.21.2) - Web framework.
-  ```
-  $ npm install express
-  ```
+  
   **jsonwebtoken** (^9.0.2) - For authentication.
-  ```
-  npm install jsonwebtoken
-  ```
+ 
   **mongoose** (^8.9.7) - For MongoDB database interactions.
- ```
-  npm install mongoose
-  ```
+ 
   **slug** (^10.0.0) - For generating SEO-friendly URLs.
- ```
-  npm install slug
- ```
+
  
 ### 3. Set up environment variables
 create a .env file in the root directory and add: 
@@ -82,6 +75,7 @@ SECRET=<your_secret_key>
 npm start
 ```
 
+and finally open http://localhost:3000 in your browser of choice
 
 ## Credits ##
 I want to use this opportunity to thank the acedemy, my mom, codecookies, and scrimba.

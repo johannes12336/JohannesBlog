@@ -18,6 +18,11 @@ document.addEventListener('click', function(e){
 })
 
 
+function handleReplyClick (postId) {
+    document.getElementById(`replies-${postId}`).classList.toggle('hidden')
+}
+
+
 async function handleLikeClick (postId){
 
     try {
@@ -38,8 +43,6 @@ async function handleLikeClick (postId){
 function handleRepostClick (postId){
     const repostTarget = document.getElementById(`repost-${postId}`)
     repostTarget.classList.toggle("reposted")
-
-
 }
 
 
@@ -52,4 +55,5 @@ async function handleDeleteClick (postId){
 
     
 }
+
 
