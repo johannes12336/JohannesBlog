@@ -1,4 +1,4 @@
-console.log('HELLO YA CUNT')
+console.log('HELLO there')
 
 
 document.addEventListener('click', function(e){
@@ -21,6 +21,8 @@ document.addEventListener('click', function(e){
 function handleReplyClick (postId) {
     document.getElementById(`replies-${postId}`).classList.toggle('hidden')
 }
+
+
 
 
 async function handleLikeClick (postId){
