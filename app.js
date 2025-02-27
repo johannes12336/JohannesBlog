@@ -384,10 +384,7 @@ app.get('/forum/delete/:id', authenticateToken, async (request, response) =>{
         await Post.findOneAndDelete({_id: request.params.id})
         const posts = await Post.find({}).exec()
         
-        response.render('forum/index', {
-            user: request.user,
-            posts: posts
-        })
+        response.redirect('/forum')
 
 
     } catch (error) {

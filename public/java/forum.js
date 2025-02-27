@@ -6,7 +6,6 @@ document.addEventListener('click', function(e){
         handleLikeClick( e.target.dataset.like)
     }  
     else if (e.target.dataset.reply){
-        console.log(e.target)
         handleReplyClick(e.target.dataset.reply)
     }
     else if (e.target.dataset.deletes){
@@ -18,10 +17,11 @@ document.addEventListener('click', function(e){
 })
 
 
+
+
 function handleReplyClick (postId) {
     document.getElementById(`replies-${postId}`).classList.toggle('hidden')
 }
-
 
 
 
